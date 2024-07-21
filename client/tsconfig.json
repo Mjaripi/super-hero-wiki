@@ -22,6 +22,6 @@
     },
     "include": [
       "src"
-    ]
+, "../cors/services/hero-data-scrapper.ts"    ]
   }
   

@@ -1,8 +1,24 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const corsPort = '8000'
+
 function App() {
+  const makeAPICall = async () => {
+    try {
+      const response = await fetch(`http://localhost:${corsPort}/cors`, { mode:'cors' });
+      console.log(await response.text())
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    makeAPICall();
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
