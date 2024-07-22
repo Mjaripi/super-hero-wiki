@@ -1,7 +1,10 @@
 import axios from "axios";
+import https from 'https'
 import * as cheerio from "cheerio";
+import { HeroBaseData } from './hero-data-scrapper.types'
 
 const sourceUrl = 'https://superheroapi.com/ids.html';
+const tableNotFoundMsg = 'Table not found on Source URL, check the page to be scraped';
 const query = 'tbody tr td';
 
 /**
@@ -11,21 +14,27 @@ const query = 'tbody tr td';
  */
 const getAllIds = async () => {
   try {
-    const ids: string[] = []
-    const response = await axios.get(sourceUrl);
+    const response = await axios.get(sourceUrl, { timeout: 10000, httpsAgent: new https.Agent({ keepAlive: true }) });
     const selector = cheerio.load(response.data);
     const table = selector('table');
-    if (!table) throw new Error('Table not found on Source URL, check the page to be scraped');
+    if (!table) throw new Error(tableNotFoundMsg);
 
-    table.find(query).each((i,row) => {
-      if (i%2 === 0) ids.push(selector(row).text())
+    const foundData: HeroBaseData[] = []
+    const foundElements = table.find(query);
+
+    foundElements.each((i,row) => {
+      if (i%2 === 0) {
+        foundData.push({
+          id: selector(row).text(),
+          name: selector(foundElements[i + 1]).text(),
+        })
+      }
     });
 
-    return ids;
+    return foundData;
   } catch (error) {
     const err = error as Error
     console.error(err)
-    throw err;
   }
 };
 
