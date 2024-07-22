@@ -12,7 +12,7 @@ const PORT = process.env.PORT;
 app.get("/get-all-ids", async (request: Request, response: Response) => {
   const ids = await getAllIds();
 
-  response.set('Access-Control-Allow-Origin', 'http:local');
+  response.set('Access-Control-Allow-Origin', '*');
   response.status(200).send(ids);
 });
 
@@ -21,7 +21,7 @@ app.get("/get-by-id/:id", async (request: Request, response: Response) => {
   const id = request.params.id;
   const data = await getDataById(id)
 
-  response.set('Access-Control-Allow-Origin', 'http:local');
+  response.set('Access-Control-Allow-Origin', '*');
   response.status(200).send(data);
 });
 
