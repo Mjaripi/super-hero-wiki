@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useQuery, useQueries } from '@tanstack/react-query'
 import tableImage from './components/table-image'
+import header from './components/header'
 import { AllDataResponse, HeroBaseData } from './response.types'
 
 const corsPort = '8000'
@@ -25,7 +26,7 @@ const App = () => {
   const supDataQueries = useQueries({
     queries: baseData.map((data) => {
       return {
-        queryKey: ['superHero', { id: data.id }],
+        queryKey: ['superHero', data.id ],
         enabled: baseData.length > 0,
         queryFn: () => axios.get(`http://localhost:${corsPort}/${data.id}`)
           .then((response) => response.data as AllDataResponse),
@@ -36,15 +37,10 @@ const App = () => {
 
   return (
     <div className="p-5">
-      <div className="grid grid-cols-1 gap-4">
-        <h2>TEST</h2>
-      </div>
+      {header()}
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1 border p-5 rounded-md">
-          DATA
-        </div>
-        <div className="col-span-2 border p-5 rounded-md">
-          <table className="table-auto border-collapse border border-slate-500 rounded">
+          <table className="w-full border-collapse border border-slate-500 rounded">
             <thead className="bg-teal-500">
               <tr>
                 <th className="text-gray-800 px-2">id</th>
@@ -64,6 +60,12 @@ const App = () => {
               })}
             </tbody>
           </table>
+        </div>
+        <div className="col-span-1 border p-5 rounded-md">
+          GENDERS
+        </div>
+        <div className="col-span-1 border p-5 rounded-md">
+          GRAPH
         </div>
       </div>
     </div>
