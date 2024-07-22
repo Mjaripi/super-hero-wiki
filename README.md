@@ -13,3 +13,4 @@ cd client && npm i && npm start
 cd cors && npm i && npm run cors
 ```
 
+Note: The base amount of heros are capped to 20. This for testing purpuses, it can be adjusted or removed on app.tsx.
