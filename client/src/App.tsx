@@ -20,7 +20,7 @@ const App = () => {
   });
 
   const baseData = (baseDataQuery.data 
-    ? baseDataQuery.data.slice(0,10)
+    ? baseDataQuery.data.slice(0,20)
     : [])
 
   const supDataQueries = useQueries({
