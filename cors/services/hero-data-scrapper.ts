@@ -14,7 +14,7 @@ const query = 'tbody tr td';
  */
 const getAllIds = async () => {
   try {
-    const response = await axios.get(sourceUrl, { timeout: 10000, httpsAgent: new https.Agent({ keepAlive: true }) });
+    const response = await axios.get(sourceUrl, { timeout: 3000, httpsAgent: new https.Agent({ keepAlive: true }) });
     const selector = cheerio.load(response.data);
     const table = selector('table');
     if (!table) throw new Error(tableNotFoundMsg);
@@ -22,8 +22,8 @@ const getAllIds = async () => {
     const foundData: HeroBaseData[] = []
     const foundElements = table.find(query);
 
-    foundElements.each((i,row) => {
-      if (i%2 === 0) {
+    foundElements.each((i, row) => {
+      if (i % 2 === 0) {
         foundData.push({
           id: selector(row).text(),
           name: selector(foundElements[i + 1]).text(),

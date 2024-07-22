@@ -15,9 +15,7 @@ const superHeroClient = async (path: string) => {
         const url = `${baseUrl}${process.env.SHTOKEN}${path}`
         
         const response = await axios.get(url, { timeout: 3000, httpsAgent: new https.Agent({ keepAlive: true })});
-        console.log(response)
         const data = await response.data;
-        console.log(path)
         
         return data;
     } catch (error) {
